@@ -1,0 +1,14 @@
+-- TODO: --
+Important:
+
+Make "rename" file dialoge use a proper GUI and not a command shell prompt
+Find bugs and fix them (there are a decent amount if i remember)
+
+Kinda important:
+Duplicate / copy and paste folders (only renaming works with folders rn)
+
+Cool upgrades:
+Images are displayed in the program, without opening it externally (same for music maybe too)
+
+Maybe:
+Mobile support?? (maybe possible
