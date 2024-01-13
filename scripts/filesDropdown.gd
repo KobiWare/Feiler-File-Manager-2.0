@@ -13,7 +13,8 @@ func setToNewFile(fileRefrence, xyPos, objRefrence):
 	self.xyPos = xyPos
 	print(xyPos)
 	set_position(xyPos)
-
+func getFavorites():
+	return favorites
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +26,8 @@ func _ready():
 	add_item("Duplicate")
 	add_item("Copy")
 	add_item("Paste")
+	add_item("Add to Favorites")
+	
 	#add_item("Open In Explorer")
 	pass # Replace with function body.
 
@@ -106,6 +109,9 @@ func _on_item_clicked(index, at_position, mouse_button_index):
 		5:
 			var dir = DirAccess.copy_absolute(get_parent().copyPath.dir, fileRefrence.dir.get_base_dir() + "/" + get_parent().copyPath.dir.get_file() + "(Copy)" + "." + get_parent().copyPath.dir.get_extension())
 			get_parent().update_dir_contents(get_parent().currentDirectory, false)
+		6:
+			print("adding to favorites")
+			favorites.append(fileRefrence)
 		_:
 			print("")
 	pass # Replace with function body.
