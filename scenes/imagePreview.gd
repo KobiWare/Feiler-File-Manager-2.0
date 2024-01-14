@@ -1,10 +1,14 @@
-extends Label3D
+extends MeshInstance3D
 
+
+func setPreviewImage():
+	var mat = StandardMaterial3D.new()
+	var tex = load("res://assets/beauprizzler.png")
+	mat.albedo_texture = tex
+	mesh.material = mat
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if(get_parent().get_parent().file != null):
-		text = get_parent().get_parent().file.name
 	pass
 
 

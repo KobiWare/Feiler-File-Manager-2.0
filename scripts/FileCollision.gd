@@ -14,17 +14,21 @@ var prevKeyR = false
 # For moving around the thingys, take the relative position to the camera, then transform
 var isMoving = false
 
-# For "is moving"
-var relativePositionToCam = Vector3()
-var camStartRotation = Vector3()
-
 # for testing,
 	#_init(Directory.new("fake_file.exe", 2, "C:/"))
 
 func setFile(file):
 	self.file = file
-	#print(get_node_or_null("CollisionShape3D/" + str(file.type)))
 	get_node("CollisionShape3D/" + str(file.type)).show()
+	var i = 0
+	while true:
+		if(str(i) != str(file.type)):
+			var object = get_node_or_null("CollisionShape3D/" + str(i))
+			if(is_instance_valid(object)):
+				object.free()
+			else:
+				break
+		i+=1
 
 func _init():
 	pass
@@ -45,11 +49,6 @@ func _process(delta):
 		direction_vector * 5
 		)
 
-func startMoving():
-	relativePositionToCam = global_position - get_node("/root/Node3D/CharacterBody3D").global_position
-	camStartRotation = get_node("/root/Node3D/CharacterBody3D").global_rotation
-	print(relativePositionToCam)
-
 func _on_input_event(camera, event, position, normal, shape_idx):
 	# If any button on the mouse is pressed
 	if(event.button_mask > 0):
@@ -64,8 +63,6 @@ func _on_input_event(camera, event, position, normal, shape_idx):
 					lastLeftClickTime = 1000
 				lastLeftClickTime = Time.get_ticks_msec()
 				isMoving = not isMoving
-				if(isMoving):
-					startMoving()
 			# Right click
 			if(event.button_mask == 2):
 				print("set dropdown")
