@@ -20,7 +20,12 @@ var isMoving = false
 func setFile(file):
 	self.file = file
 	get_node("CollisionShape3D/" + str(file.type)).show()
+	
+	get_node("CollisionShape3D/Label3D").updateText()
+	
 	var i = 0
+	
+	# Removes all the unneeded object types
 	while true:
 		if(str(i) != str(file.type)):
 			var object = get_node_or_null("CollisionShape3D/" + str(i))
@@ -29,6 +34,10 @@ func setFile(file):
 			else:
 				break
 		i+=1
+	
+	# Preview for image
+	if(file.type == 4):
+		get_node("CollisionShape3D/4/MeshInstance3D").setPreviewImage(file.dir)
 
 func _init():
 	pass
@@ -46,7 +55,7 @@ func _process(delta):
 		var direction_vector = -cameraTransform.basis.z
 		
 		set_global_position(get_node("/root/Node3D/CharacterBody3D").global_position + 
-		direction_vector * 5
+			direction_vector * 5
 		)
 
 func _on_input_event(camera, event, position, normal, shape_idx):

@@ -1,8 +1,9 @@
 extends MeshInstance3D
 
 
-func setPreviewImage():
+func setPreviewImage(imageDir):
 	var mat = StandardMaterial3D.new()
+	# TODO: load actual image dir
 	var tex = load("res://assets/beauprizzler.png")
 	mat.albedo_texture = tex
 	mesh.material = mat
