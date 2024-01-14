@@ -13,8 +13,6 @@ func setToNewFile(fileRefrence, xyPos, objRefrence):
 	self.xyPos = xyPos
 	print(xyPos)
 	set_position(xyPos)
-func getFavorites():
-	return favorites
 
 
 # Called when the node enters the scene tree for the first time.
@@ -111,7 +109,7 @@ func _on_item_clicked(index, at_position, mouse_button_index):
 			get_parent().update_dir_contents(get_parent().currentDirectory, false)
 		6:
 			print("adding to favorites")
-			favorites.append(fileRefrence)
+			Globals.favorites.append(fileRefrence)
 		_:
 			print("")
 	pass # Replace with function body.
