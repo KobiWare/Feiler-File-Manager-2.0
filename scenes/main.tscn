@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://htw5vf3ygj3t"]
+[gd_scene load_steps=13 format=3 uid="uid://htw5vf3ygj3t"]
 
 [ext_resource type="Script" path="res://scripts/movementAndRotation.gd" id="1_8ymtw"]
 [ext_resource type="Script" path="res://scripts/Directory.gd" id="1_eexaa"]
 [ext_resource type="Texture2D" uid="uid://7f8r02k5j84t" path="res://assets/jammy jellyfish.png" id="3_04lwf"]
+[ext_resource type="AudioStream" uid="uid://bnep06xbs6xka" path="res://assets/Royalty Free Lounge Music.mp3" id="3_umsu7"]
 [ext_resource type="Script" path="res://scripts/panosky.gd" id="4_0dy3o"]
 [ext_resource type="Script" path="res://scripts/filesDropdown.gd" id="5_pl2cs"]
 [ext_resource type="Script" path="res://scripts/DirEdit.gd" id="6_vpodu"]
@@ -32,6 +33,11 @@ current = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("SphereShape3D_w8rvq")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0803652, 0.0397885, 0.00669718)
+stream = ExtResource("3_umsu7")
+autoplay = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1025o")

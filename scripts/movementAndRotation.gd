@@ -54,7 +54,7 @@ func _input(event):
 	# Receives key input
 	if event is InputEventKey:
 		match event.keycode:
-			KEY_SPACE:	
+			KEY_SPACE:
 				_esc = event.pressed
 			KEY_W:
 				_w = event.pressed

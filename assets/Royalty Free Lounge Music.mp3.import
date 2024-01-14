@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bnep06xbs6xka"
+path="res://.godot/imported/Royalty Free Lounge Music.mp3-e82284e5d5d7fe7bdc5f1ab476506612.mp3str"
+
+[deps]
+
+source_file="res://assets/Royalty Free Lounge Music.mp3"
+dest_files=["res://.godot/imported/Royalty Free Lounge Music.mp3-e82284e5d5d7fe7bdc5f1ab476506612.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
