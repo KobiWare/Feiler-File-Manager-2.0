@@ -16,6 +16,7 @@ var isMoving = false
 
 # For "is moving"
 var relativePositionToCam = Vector3()
+var camStartRotation = Vector3()
 
 # for testing,
 	#_init(Directory.new("fake_file.exe", 2, "C:/"))
@@ -32,14 +33,21 @@ func _on_mouse_entered():
 	pass # Replace with function body.
 
 func _on_mouse_exited():
-	pass	
+	pass
 
 func _process(delta):
 	if(isMoving):
-		set_global_position(get_node("/root/Node3D/CharacterBody3D").global_position + relativePositionToCam)
+		# I dont know why this works, but it just does
+		var cameraTransform = get_node("/root/Node3D/CharacterBody3D/Camera").get_global_transform()
+		var direction_vector = -cameraTransform.basis.z
+		
+		set_global_position(get_node("/root/Node3D/CharacterBody3D").global_position + 
+		direction_vector * 5
+		)
 
 func startMoving():
 	relativePositionToCam = global_position - get_node("/root/Node3D/CharacterBody3D").global_position
+	camStartRotation = get_node("/root/Node3D/CharacterBody3D").global_rotation
 	print(relativePositionToCam)
 
 func _on_input_event(camera, event, position, normal, shape_idx):
