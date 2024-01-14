@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bb752on3eyhmg"]
+[gd_scene load_steps=12 format=3 uid="uid://bb752on3eyhmg"]
 
 [ext_resource type="Script" path="res://scripts/FileCollision.gd" id="1_xp2an"]
 [ext_resource type="PackedScene" uid="uid://nwmophnjajys" path="res://assets/fileIcons/boxOpen.glb" id="2_pqs0e"]
@@ -6,9 +6,12 @@
 [ext_resource type="PackedScene" uid="uid://c6cdcm8hydug6" path="res://assets/fileIcons/exe.glb" id="4_gy5eh"]
 [ext_resource type="PackedScene" uid="uid://b4pp6w7tskfjt" path="res://assets/fileIcons/box.glb" id="5_ml2fj"]
 [ext_resource type="PackedScene" uid="uid://dytvste57xbin" path="res://assets/fileIcons/img.glb" id="6_ju707"]
+[ext_resource type="Script" path="res://scenes/imagePreview.gd" id="7_c13q6"]
 [ext_resource type="PackedScene" uid="uid://bsb6wb2y432fm" path="res://assets/fileIcons/unknown.glb" id="7_kdckq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_of362"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2ol2x"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_2q7hi"]
 
@@ -37,6 +40,11 @@ visible = false
 [node name="4" parent="CollisionShape3D" instance=ExtResource("6_ju707")]
 transform = Transform3D(-2.40413e-08, 0, -0.55, 0, 0.55, 0, 0.55, 0, -2.40413e-08, 0, 0, 0)
 visible = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D/4"]
+transform = Transform3D(-0.00335117, 0.999994, -0.000890055, -4.37114e-08, -0.00089006, -1, -0.999995, -0.00335117, 3.02646e-06, 0, 2.56069, 0)
+mesh = SubResource("PlaneMesh_2ol2x")
+script = ExtResource("7_c13q6")
 
 [node name="5" parent="CollisionShape3D" instance=ExtResource("7_kdckq")]
 transform = Transform3D(-0.55, 0, -4.80825e-08, 0, 0.55, 0, 4.80825e-08, 0, -0.55, 0, 0, 0)
