@@ -48,15 +48,12 @@ var filesInDirectory = []
 var currentDirectory = "C:/Users/" + username + "/"
 var prevKeyR = false
 
-func removeFileNodes(reset_pos):
+func removeFileNodes():
 	# Remove all previous files and reset position
 	var children = get_children()
 	for child in children:
 		if "File" in child.name:
 			child.queue_free()
-	if(get_node_or_null("/root/Node3D/CharacterBody3D") != null):
-		if(reset_pos):
-			get_node("/root/Node3D/CharacterBody3D").global_position = Vector3(0, 0, 0)
 
 func sortFiles(toSort):
 	var children = get_children()
@@ -104,17 +101,16 @@ func get_length_of_path(path):
 	return i
 
 # Updates filesInDirectory to be the files in the current directory
-func update_dir_contents(path, reset_pos=true):
+func update_dir_contents(path):
 	var cubeSize = floor(pow(get_length_of_path(path), 0.33334)) + 1
 	var leftOverCubes = get_length_of_path(path) - pow(cubeSize, 3)
 	print("Cube", cubeSize)
 	print("leftover", leftOverCubes)
-	removeFileNodes(reset_pos)
+	removeFileNodes()
 	var dir = DirAccess.open(path)
 	var x
 	var y
 	var z
-	
 	
 	if(get_node_or_null("/root/Node3D/DirEdit") != null):
 		get_node_or_null("/root/Node3D/DirEdit").text = currentDirectory
@@ -153,9 +149,9 @@ func update_dir_contents(path, reset_pos=true):
 			var instance = scene.instantiate()
 			add_child(instance)
 			
-			x = fmod(i, cubeSize) * 11
-			y = fmod(floor(i / cubeSize), cubeSize) * 11
-			z = (floor(i / cubeSize / cubeSize)) * 11
+			x = fmod(i, cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
+			y = fmod(floor(i / cubeSize), cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
+			z = (floor(i / cubeSize / cubeSize)) * -6
 			
 			instance.position = Vector3(float(x), float(y), float(z) - 15)
 			#instance.global_position = Vector3(i * 200, 0, 0)
@@ -164,6 +160,8 @@ func update_dir_contents(path, reset_pos=true):
 			#print(str(file) + path + file_name)
 			file_name = dir.get_next()
 			i += 1
+		if(get_node_or_null("/root/Node3D/CharacterBody3D") != null):
+			get_node("/root/Node3D/CharacterBody3D").global_position = Vector3(0, 0, 0)
 	else:
 		OS.alert("An error occurred when trying to access the path.")
 	currentDirectory = currentDirectory.replace("\\", "/")
