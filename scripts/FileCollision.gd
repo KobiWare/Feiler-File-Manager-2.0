@@ -10,6 +10,13 @@ var prevKeyBackspace
 var lastLeftClickTime = 10000
 var prevKeyR = false
 
+
+# For moving around the thingys, take the relative position to the camera, then transform
+var isMoving = false
+
+# For "is moving"
+var relativePositionToCam = Vector3()
+
 # for testing,
 	#_init(Directory.new("fake_file.exe", 2, "C:/"))
 
@@ -27,6 +34,14 @@ func _on_mouse_entered():
 func _on_mouse_exited():
 	pass	
 
+func _process(delta):
+	if(isMoving):
+		set_global_position(get_node("/root/Node3D/CharacterBody3D").global_position + relativePositionToCam)
+
+func startMoving():
+	relativePositionToCam = global_position - get_node("/root/Node3D/CharacterBody3D").global_position
+	print(relativePositionToCam)
+
 func _on_input_event(camera, event, position, normal, shape_idx):
 	# If any button on the mouse is pressed
 	if(event.button_mask > 0):
@@ -40,6 +55,9 @@ func _on_input_event(camera, event, position, normal, shape_idx):
 					print("left click")
 					lastLeftClickTime = 1000
 				lastLeftClickTime = Time.get_ticks_msec()
+				isMoving = not isMoving
+				if(isMoving):
+					startMoving()
 			# Right click
 			if(event.button_mask == 2):
 				print("set dropdown")
