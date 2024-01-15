@@ -53,6 +53,7 @@ script = ExtResource("5_pl2cs")
 [node name="DirEdit" type="TextEdit" parent="."]
 offset_right = 2449.0
 offset_bottom = 43.0
+theme_override_colors/background_color = Color(0.27451, 0.27451, 0.27451, 0)
 theme_override_font_sizes/font_size = 25
 text = "C:/"
 script = ExtResource("6_vpodu")
@@ -65,6 +66,7 @@ offset_top = -43.0
 offset_right = 501.0
 offset_bottom = 11.0
 grow_vertical = 0
+theme_override_colors/background_color = Color(0, 0, 0, 0)
 theme_override_font_sizes/font_size = 25
 placeholder_text = "Search..."
 script = ExtResource("7_pv85p")
