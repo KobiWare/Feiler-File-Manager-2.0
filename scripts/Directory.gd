@@ -145,12 +145,13 @@ func drawFiles(files, offset):
 	currentDirectory = currentDirectory.replace("\\", "/")
 
 # Updates filesInDirectory to be the files in the current directory
-func update_dir_contents(path):
+func update_dir_contents(path, resetPlayerPos=true):
 	removeFileNodes()
 	var dir = DirAccess.open(path)
 	
 	# Draw the favorites dir
-	drawFiles(["C:/Users/nathan.mills/Desktop/things/", "C:/Users/nathan.mills/Desktop/things/read.txt"], Vector3(0, 0, 15))
+	print(Globals.favorites)
+	drawFiles(Globals.favorites, Vector3(0, 0, 15))
 	
 	# Draw the current directory
 	if(get_node_or_null("/root/Node3D/DirEdit") != null):
@@ -170,7 +171,7 @@ func update_dir_contents(path):
 		drawFiles(files, Vector3(0, 0, -15))
 		
 		# reset player pos
-		if(get_node_or_null("/root/Node3D/CharacterBody3D") != null):
+		if(get_node_or_null("/root/Node3D/CharacterBody3D") != null and resetPlayerPos):
 			get_node("/root/Node3D/CharacterBody3D").global_position = Vector3(0, 0, 0)
 	else:
 		OS.alert("An error occurred when trying to access the path.")
