@@ -109,7 +109,9 @@ func _on_item_clicked(index, at_position, mouse_button_index):
 			get_parent().update_dir_contents(get_parent().currentDirectory, false)
 		6:
 			print("adding to favorites")
-			Globals.favorites.append(fileRefrence)
+			Globals.favorites.append(fileRefrence.dir)
+			print(get_parent().currentDirectory)
+			get_parent().update_dir_contents(get_parent().currentDirectory, false)
 		_:
 			print("")
 	pass # Replace with function body.
