@@ -71,21 +71,8 @@ func resolve_size(path):
 		return file.get_length()
 	else:
 		var output = [10]
-		#OS.execute("powershell.exe", ["(ls -r " + path + " | measure -sum Length).sum"], output)
-		#print(path, ": ", output[0])
-		return 100#int(output[0])
-		#var dir = DirAccess.open(path)
-		#if dir:
-		#	dir.list_dir_begin()
-		#	var size = 0
-		#	var file_name = dir.get_next()
-		#	while file_name != "":
-		#		#print(path + "/" + file_name)
-		#		size += resolve_size(path + "/" + file_name)
-		#		file_name = dir.get_next()
-		#	return size
-		#else:
-		#	return -1
+		return 100
+
 func get_length_of_path(path):
 	var dir = DirAccess.open(path)
 	var i = 0;
@@ -100,6 +87,63 @@ func get_length_of_path(path):
 	print("NUM ", i)
 	return i
 
+# TODO: Combine this and update_dir_contents
+func drawFiles(files, offset):
+	var cubeSize = floor(pow(files.size(), 0.33334)) + 1
+	var leftOverCubes = files.size() - pow(cubeSize, 3)
+	print("Cube", cubeSize)
+	print("leftover", leftOverCubes)
+	
+	var x
+	var y
+	var z
+	
+	var scene = preload("res://scenes/file.tscn")
+	for i in range(files.size()):
+		var fileObject
+		
+		var path = files[i].get_base_dir() + "/"
+		var file_name = files[i].get_file()
+		
+		if files[i].get_file() == "": # folder
+			fileObject = File.new(files[i].split("/")[-2], 1, files[i])
+		else: # file
+			var file_type = (file_name.rsplit("."))
+			file_type = file_type[file_type.size() - 1]
+			match file_type:
+				"exe":
+					fileObject = File.new(file_name, 2, path + file_name)
+				"lnk":
+					fileObject = File.new(file_name, 2, path + file_name)
+				"zip":
+					fileObject = File.new(file_name, 3, path + file_name)
+				"png":
+					fileObject = File.new(file_name, 4, path + file_name)
+				"jpg":
+					fileObject = File.new(file_name, 4, path + file_name)
+				"jpeg":
+					fileObject = File.new(file_name, 4, path + file_name)
+				"svg":
+					fileObject = File.new(file_name, 4, path + file_name)
+				"txt":
+					fileObject = File.new(file_name, 5, path + file_name)
+				_:
+					fileObject = File.new(file_name, 0, path + file_name)
+		filesInDirectory.push_back(fileObject)
+		var instance = scene.instantiate()
+		add_child(instance)
+		
+		x = fmod(i, cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
+		y = fmod(floor(i / cubeSize), cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
+		z = (floor(i / cubeSize / cubeSize)) * -6
+		var positionVector = Vector3(float(x), float(y), float(z) - 15)
+		positionVector += offset
+		
+		instance.position = positionVector
+		instance.setFile(fileObject)
+		instance.scale *= clamp(log(pow(resolve_size(path + file_name), 0.333333333333)), 0.5, 100000000)
+	currentDirectory = currentDirectory.replace("\\", "/")
+
 # Updates filesInDirectory to be the files in the current directory
 func update_dir_contents(path):
 	var cubeSize = floor(pow(get_length_of_path(path), 0.33334)) + 1
@@ -111,6 +155,8 @@ func update_dir_contents(path):
 	var x
 	var y
 	var z
+	
+	drawFiles(["C:/Users/nathan.mills/Desktop/things/", "C:/Users/nathan.mills/Desktop/things/read.txt"], Vector3(0, 0, 30))
 	
 	if(get_node_or_null("/root/Node3D/DirEdit") != null):
 		get_node_or_null("/root/Node3D/DirEdit").text = currentDirectory
