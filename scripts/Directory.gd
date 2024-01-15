@@ -136,7 +136,7 @@ func drawFiles(files, offset):
 		x = fmod(i, cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
 		y = fmod(floor(i / cubeSize), cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
 		z = (floor(i / cubeSize / cubeSize)) * -6
-		var positionVector = Vector3(float(x), float(y), float(z) - 15)
+		var positionVector = Vector3(float(x), float(y), float(z))
 		positionVector += offset
 		
 		instance.position = positionVector
@@ -146,66 +146,30 @@ func drawFiles(files, offset):
 
 # Updates filesInDirectory to be the files in the current directory
 func update_dir_contents(path):
-	var cubeSize = floor(pow(get_length_of_path(path), 0.33334)) + 1
-	var leftOverCubes = get_length_of_path(path) - pow(cubeSize, 3)
-	print("Cube", cubeSize)
-	print("leftover", leftOverCubes)
 	removeFileNodes()
 	var dir = DirAccess.open(path)
-	var x
-	var y
-	var z
 	
-	drawFiles(["C:/Users/nathan.mills/Desktop/things/", "C:/Users/nathan.mills/Desktop/things/read.txt"], Vector3(0, 0, 30))
+	# Draw the favorites dir
+	drawFiles(["C:/Users/nathan.mills/Desktop/things/", "C:/Users/nathan.mills/Desktop/things/read.txt"], Vector3(0, 0, 15))
 	
+	# Draw the current directory
 	if(get_node_or_null("/root/Node3D/DirEdit") != null):
 		get_node_or_null("/root/Node3D/DirEdit").text = currentDirectory
 	if dir:
-		var scene = preload("res://scenes/file.tscn")
+		# Gather all of the files/folders in the directory
+		var files = []
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
-		var i = 0
 		while file_name != "":
-			var fileObject
-			if dir.current_is_dir(): # folder
-				fileObject = File.new(file_name, 1, path + file_name + "/")
-			else: # file
-				var file_type = (file_name.rsplit("."))
-				file_type = file_type[file_type.size() - 1]
-				match file_type:
-					"exe":
-						fileObject = File.new(file_name, 2, path + file_name)
-					"lnk":
-						fileObject = File.new(file_name, 2, path + file_name)
-					"zip":
-						fileObject = File.new(file_name, 3, path + file_name)
-					"png":
-						fileObject = File.new(file_name, 4, path + file_name)
-					"jpg":
-						fileObject = File.new(file_name, 4, path + file_name)
-					"jpeg":
-						fileObject = File.new(file_name, 4, path + file_name)
-					"svg":
-						fileObject = File.new(file_name, 4, path + file_name)
-					"txt":
-						fileObject = File.new(file_name, 5, path + file_name)
-					_:
-						fileObject = File.new(file_name, 0, path + file_name)
-			filesInDirectory.push_back(fileObject)
-			var instance = scene.instantiate()
-			add_child(instance)
-			
-			x = fmod(i, cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
-			y = fmod(floor(i / cubeSize), cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
-			z = (floor(i / cubeSize / cubeSize)) * -6
-			
-			instance.position = Vector3(float(x), float(y), float(z) - 15)
-			#instance.global_position = Vector3(i * 200, 0, 0)
-			instance.setFile(fileObject)
-			instance.scale *= clamp(log(pow(resolve_size(path + file_name), 0.333333333333)), 0.5, 100000000)
-			#print(str(file) + path + file_name)
+			if dir.current_is_dir():
+				file_name+="/"
+			files.append(path + file_name)
 			file_name = dir.get_next()
-			i += 1
+		
+		# Draw the files now
+		drawFiles(files, Vector3(0, 0, -15))
+		
+		# reset player pos
 		if(get_node_or_null("/root/Node3D/CharacterBody3D") != null):
 			get_node("/root/Node3D/CharacterBody3D").global_position = Vector3(0, 0, 0)
 	else:
