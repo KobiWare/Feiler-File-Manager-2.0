@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://ccollnx2nbgml"]
+
+[ext_resource type="PackedScene" uid="uid://cqjfteoy2yowh" path="res://assets/fileIcons/laser box.dae" id="1_vdan2"]
+[ext_resource type="Script" path="res://scripts/LabelLogic.gd" id="2_3ejc1"]
+
+[node name="folderContainer" type="Node3D"]
+
+[node name="laser box" parent="." instance=ExtResource("1_vdan2")]
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(0.401, 0, 0, 0, 0.401, 0, 0, 0, 0.401, -0.978816, 1.22202, 1.01161)
+pixel_size = 0.0121
+text = "Folder Name"
+horizontal_alignment = 0
+vertical_alignment = 0
+autowrap_mode = 1
+width = 200.0
+script = ExtResource("2_3ejc1")

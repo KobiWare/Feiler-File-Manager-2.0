@@ -149,7 +149,7 @@ func drawFiles(files, offset):
 	
 	currentDirectory = currentDirectory.replace("\\", "/")
 	
-	var box = preload("res://assets/fileIcons/laser box.dae")
+	var box = preload("res://scenes/folderContainer.tscn")
 	var boxInstance = box.instantiate()
 	add_child(boxInstance)
 	boxInstance.scale *= 0.5
