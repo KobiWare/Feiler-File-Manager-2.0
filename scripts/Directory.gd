@@ -54,6 +54,8 @@ func removeFileNodes():
 	for child in children:
 		if "File" in child.name:
 			child.queue_free()
+		if "laser box" in child.name:
+			child.queue_free()
 
 func sortFiles(toSort):
 	var children = get_children()
@@ -98,6 +100,8 @@ func drawFiles(files, offset):
 	var y
 	var z
 	
+	var cubeSpacing = 6
+	
 	var scene = preload("res://scenes/file.tscn")
 	for i in range(files.size()):
 		var fileObject
@@ -133,16 +137,25 @@ func drawFiles(files, offset):
 		var instance = scene.instantiate()
 		add_child(instance)
 		
-		x = fmod(i, cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
-		y = fmod(floor(i / cubeSize), cubeSize) * -6 + ((cubeSize-1) / 2.0 * 6.0)
-		z = (floor(i / cubeSize / cubeSize)) * -6
+		x = fmod(i, cubeSize) * -cubeSpacing + ((cubeSize-1) / 2.0 * cubeSpacing)
+		y = fmod(floor(i / cubeSize), cubeSize) * -cubeSpacing + ((cubeSize-1) / 2.0 * cubeSpacing)
+		z = (floor(i / cubeSize / cubeSize)) * -cubeSpacing
 		var positionVector = Vector3(float(x), float(y), float(z))
 		positionVector += offset
 		
 		instance.position = positionVector
 		instance.setFile(fileObject)
 		instance.scale *= clamp(log(pow(resolve_size(path + file_name), 0.333333333333)), 0.5, 100000000)
+	
 	currentDirectory = currentDirectory.replace("\\", "/")
+	
+	var box = preload("res://assets/fileIcons/laser box.dae")
+	var boxInstance = box.instantiate()
+	add_child(boxInstance)
+	boxInstance.scale *= 0.5
+	boxInstance.scale *= cubeSpacing * cubeSize
+	
+	boxInstance.position = offset + Vector3(0, 0, -cubeSpacing * ((cubeSize- 1) / 2))
 
 # Updates filesInDirectory to be the files in the current directory
 func update_dir_contents(path, resetPlayerPos=true):
