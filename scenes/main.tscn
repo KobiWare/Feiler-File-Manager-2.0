@@ -37,6 +37,8 @@ shape = SubResource("SphereShape3D_w8rvq")
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0803652, 0.0397885, 0.00669718)
 stream = ExtResource("3_umsu7")
+volume_db = -37.477
+max_db = -13.93
 autoplay = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
